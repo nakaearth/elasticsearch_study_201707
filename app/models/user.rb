@@ -63,8 +63,8 @@ class User < ApplicationRecord
       end
     end
 
-    def as_indexed_json(_options = {})
-      as_json.merge(as_indexed_json_book(optoins))
+    def as_indexed_json(options = {})
+      as_json.merge(as_indexed_json_book(options))
     end
 
     class << self
@@ -95,7 +95,7 @@ class User < ApplicationRecord
 
     private
 
-  def as_indexed_json_book(_options = {})
+  def as_indexed_json_book(options = {})
     return {} unless books
 
     { books: books.map{ |book| book.attributes } }
