@@ -83,12 +83,14 @@ class User < ApplicationRecord
         es = __elasticsearch__
 
         find_in_batches.with_index do |entries, _i|
-          es.client.bulk(
+          result = es.client.bulk(
             index: es.index_name,
             type: es.document_type,
             body: entries.map { |entry| { index: { _id: entry.id, data: entry.as_indexed_json } } },
             refresh: true, # NOTE: 定期的にrefreshしないとEsが重くなる
           )
+
+          Rails.logger.debug("[#{i}] took:#{result['took']} erros:#{result['errors']} items:#{result['items'].size}")
         end
       end
     end
