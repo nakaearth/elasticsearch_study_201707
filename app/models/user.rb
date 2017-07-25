@@ -82,7 +82,7 @@ class User < ApplicationRecord
       def bulk_import
         es = __elasticsearch__
 
-        find_in_batches.with_index do |entries, _i|
+        find_in_batches.with_index do |entries, i|
           result = es.client.bulk(
             index: es.index_name,
             type: es.document_type,
