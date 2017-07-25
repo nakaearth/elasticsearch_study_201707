@@ -12,6 +12,7 @@ class SetupElasticsearch
       logger = ActiveSupport::Logger.new("log/setup_elasticsearch_batch.log", 'daily')
       force = args[:force] || false
 
+      User.__elasticsearch__.client = ElasticsearchClient.connection
       logger.info('index作成')
       User.create_index!(force: force)
       # importする

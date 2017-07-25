@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
   has_many :books
 
-  index_name = 'es_user'
+  index_name = 'users'
 
   settings index: {
       number_of_shards:   5,
@@ -90,7 +90,7 @@ class User < ApplicationRecord
             refresh: true, # NOTE: 定期的にrefreshしないとEsが重くなる
           )
 
-          Rails.logger.debug("[#{i}] took:#{result['took']} erros:#{result['errors']} items:#{result['items'].size}")
+          Rails.logger.info("[#{i}] took:#{result['took']} erros:#{result['errors']} items:#{result['items'].size}")
         end
       end
     end
